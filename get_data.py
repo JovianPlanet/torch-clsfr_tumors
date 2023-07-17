@@ -6,7 +6,7 @@ import nibabel as nib
 import nibabel.processing
 
 
-class Unet3D_DS(Dataset):
+class CNN3D_DS(Dataset):
 
     def __init__(self, config, mode):
 
@@ -71,7 +71,7 @@ class Unet3D_DS(Dataset):
         return mri, label
 
 
-class Unet2D_DS(Dataset):
+class Cnn2D_Ds(Dataset):
 
     def __init__(self, config, mode):
 
@@ -156,8 +156,17 @@ def preprocess(path, config, norm=False):
     aff  = scan.affine
     vol  = scan.get_fdata() # np.int16(scan.get_fdata())
     
-    new_affine = nibabel.affines.rescale_affine(aff, vol.shape, config['hyperparams']['new_z'], config['hyperparams']['model_dims']) # new_zooms, (128, 128, 64))#new_shape)
-    scan       = nibabel.processing.conform(scan, config['hyperparams']['model_dims'], config['hyperparams']['new_z']) # (128, 128, 64), new_zooms)
+    new_affine = nibabel.affines.rescale_affine(aff, 
+                                                vol.shape, 
+                                                config['hyperparams']['new_z'], 
+                                                config['hyperparams']['model_dims']
+    ) 
+
+    scan = nibabel.processing.conform(scan, 
+                                      config['hyperparams']['model_dims'], 
+                                      config['hyperparams']['new_z']
+    )
+
     ni_img     = nib.Nifti1Image(scan.get_fdata(), new_affine)
     vol        = ni_img.get_fdata() 
 
