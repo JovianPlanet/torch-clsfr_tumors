@@ -75,10 +75,10 @@ def get_parameters(mode):
 
     folder = './outs/Ex-' + datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
 
-    Path(folder).mkdir(parents=True, exist_ok=True)
-    #Path(os.path.join(folder, 'imgs')).mkdir(parents=True, exist_ok=True)
-
     if mode == 'train':
+
+        Path(folder).mkdir(parents=True, exist_ok=True)
+        #Path(os.path.join(folder, 'imgs')).mkdir(parents=True, exist_ok=True)
 
         files = {'model'  : os.path.join(folder, 'weights'),
                  'losses' : os.path.join(folder, 'losses.csv'),
@@ -99,8 +99,10 @@ def get_parameters(mode):
 
     elif mode == 'test':
 
-        PATH_TRAINED_MODEL = './outs/2023-07-11/weights-BCELog-20_eps-100_heads-2023-07-11-_nobn-e19.pth' 
-        PATH_TEST_DICES = './outs/2023-07-11/test_metrics.csv'
+        ex = 'Ex-2023-07-16-01-29-47'
+        mo = 'weights-e14.pth'
+        PATH_TRAINED_MODEL = os.path.join('./outs', ex, mo)#'./outs/Ex-2023-07-16-01-29-47/weights-e14.pth' 
+        PATH_TEST_DICES = os.path.join('./outs', ex, 'test_metrics.csv')#'./outs/Ex-2023-07-16-01-29-47/test_metrics.csv'
 
         return {'mode'       : mode,
                 'data'       : datasets,
@@ -112,10 +114,17 @@ def get_parameters(mode):
 
     elif mode == 'assess':
 
-        train_losses = './outs/2023-07-11/losses-BCELog-20_eps-100_heads-2023-07-11-_nobn.csv'
-        train_metrics  = './outs/2023-07-11/t-accs-BCELog-20_eps-2023-07-11-_nobn.csv'
-        val_metrics  = './outs/2023-07-11/v-accs-BCELog-20_eps-2023-07-11-_nobn.csv'
-        test_metrics   = './outs/2023-07-11/test_metrics.csv'
+        ex = 'Ex-2023-07-16-01-29-47' #'2023-07-11'#
+        mo = 'weights-e14.pth'
+
+        plots_folder = os.path.join('./outs', ex, 'plots'+mo[:-4])
+
+        Path(plots_folder).mkdir(parents=True, exist_ok=True)
+
+        train_losses = os.path.join('./outs', ex, 'losses.csv')#'./outs/2023-07-11/losses-BCELog-20_eps-100_heads-2023-07-11-_nobn.csv'
+        train_metrics  = os.path.join('./outs', ex, 'train_metrics.csv')#'./outs/2023-07-11/t-accs-BCELog-20_eps-2023-07-11-_nobn.csv'
+        val_metrics  = os.path.join('./outs', ex, 'val_metrics.csv')#'./outs/2023-07-11/v-accs-BCELog-20_eps-2023-07-11-_nobn.csv'
+        test_metrics   = os.path.join('./outs', ex, 'test_metrics.csv')#'./outs/2023-07-11/test_metrics.csv'
 
         files = {'train_Loss': train_losses,
                  'train_mets': train_metrics,
@@ -125,5 +134,6 @@ def get_parameters(mode):
 
         return {'mode'     : mode,
                 'labels'   : labels,
-                'files'    : files
+                'files'    : files,
+                'plots'    : plots_folder,
                 }

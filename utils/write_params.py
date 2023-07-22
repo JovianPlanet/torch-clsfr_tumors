@@ -11,7 +11,7 @@ n val                   = {config['hyperparams']['n_val']}
 n test                  = {config['hyperparams']['n_test']}    
 Batch normalization     = {config['hyperparams']['batchnorm']} 
 Numero de clases        = {config['hyperparams']['nclasses']}  
-Umbral                  = {config['hyperparams']['thres']}     """
+Umbral                  = {config['hyperparams']['thres']}"""
 
     with open(config['files']['params'], 'w') as f:
         f.write(text)
