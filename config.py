@@ -102,14 +102,14 @@ def get_parameters(mode):
         ex = 'Ex-2023-07-16-01-29-47'
         mo = 'weights-e14.pth'
         PATH_TRAINED_MODEL = os.path.join('./outs', ex, mo)#'./outs/Ex-2023-07-16-01-29-47/weights-e14.pth' 
-        PATH_TEST_DICES = os.path.join('./outs', ex, 'test_metrics.csv')#'./outs/Ex-2023-07-16-01-29-47/test_metrics.csv'
+        PATH_TEST_METS = os.path.join('./outs', ex, 'test_metrics.csv')#'./outs/Ex-2023-07-16-01-29-47/test_metrics.csv'
 
         return {'mode'       : mode,
                 'data'       : datasets,
                 'hyperparams': hyperparams,
                 'labels'     : labels,
                 'weights'    : PATH_TRAINED_MODEL,
-                'test_fn'    : PATH_TEST_DICES,
+                'test_fn'    : PATH_TEST_METS,
         }
 
     elif mode == 'assess':

@@ -36,10 +36,6 @@ def assess(config):
 
     # # fixCSV(config)
 
-    # ylabel
-    # xlabel
-    # swarmplot
-
     print(f'\nEntrenamiento\n')
 
     mets = list(df_train.columns.values)[2:-1]
@@ -93,48 +89,16 @@ def assess(config):
 
     df_melted = pd.melt(df_test, id_vars=['Batch'], value_vars=mets)
 
-    sns.boxplot(data=df_test['Accuracy'])#, x="Batch", y="value", hue="variable")
-    plt.show()
+    for col in mets:
 
-    # for col in mets:
+        if 'F1Score' in col:
+            continue
 
-    #     if 'F1Score' in col:
-    #         continue
+        mean_mets = df_test[col].mean()
+        print(f'Average {tr[col]} (Prueba) = {mean_mets:.3f}')
 
-    #     mean_mets = df_test.groupby("Epoca")[col].mean()
-    #     print(f'Average {tr[col]} (Prueba) = {mean_mets[19]:.3f}')
-
-    #     plt.scatter(range(1, 21), mean_mets, marker='o', label=tr[col])
-
-    # plt.title(f'Métricas promedio (Prueba)')
-    # plt.xticks(np.arange(1, 21, step=1))
-    # plt.xlabel(f'Época')
-    # plt.ylabel(f'Valor')
-    # plt.legend(title='Métricas:')
-    # plt.savefig(os.path.join(config['plots'], f'test_metrics.pdf'), dpi=300, format='pdf')
-
-    # plt.close('all')
-
-    # #fixCSV(config['files']['val_mets'])
-
-    
-
-    # acxep = df_train.groupby("Epoca")["Accuracy"].mean()
-    # plt.scatter(range(len(acxep)), acxep, marker='o')
-    # plt.title('Accuracy promedio (Eval)')
-    # #plt.xticks(np.arange(0, 20, step=1))
+    # sns.boxplot(data=df_test['Accuracy'])#, x="Batch", y="value", hue="variable")
     # plt.show()
-
-    # cols = df_test.columns.values.tolist()
-
-    # for c in cols[1:-1]:
-    #     #mexep = df_test.groupby("Epoca")[c].mean()
-    #     mean_mets = df_test[c].mean()
-    #     print(f'\nAverage {c} (Test) = {mean_mets:.3f}')
-    #     plt.scatter(range(len(df_test[c])), df_test[c], marker='o')
-    #     plt.title(f'{c} promedio (Test)')
-    #     #plt.xticks(np.arange(0, 20, step=1))
-    #     plt.show()
 
 
 def fixCSV(path):
