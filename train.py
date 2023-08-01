@@ -129,7 +129,7 @@ def train(config):
 
 
         before_lr = optimizer.param_groups[0]["lr"]
-        if (epoch + 1) % 5:
+        if (epoch + 1) % 5 == 0:
             scheduler.step()
         after_lr = optimizer.param_groups[0]["lr"]
 
@@ -197,7 +197,7 @@ def train(config):
         if ep_val_acc > best_acc:
             best_acc = ep_val_acc
             best_ep_acc = epoch + 1
-            torch.save(cnn.state_dict(), config['files']['model']+f'-e{epoch+1}.pth')
+        torch.save(cnn.state_dict(), config['files']['model']+f'-e{epoch+1}.pth')
 
         print(f'\nMetricas promedio de la epoca (Validacion):')
         print(f'Accuracy      = {ep_val_acc:.3f}, Best accuracy = {best_acc:.3f} (epoca {best_ep_acc})')

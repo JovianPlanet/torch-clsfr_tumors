@@ -14,26 +14,26 @@ class Cnn2D(nn.Module):
         self.maxpool1 = nn.MaxPool2d(kernel_size=2, stride=2)
 
         # initialize second set of CONV => RELU => POOL layers
-        self.conv2 = nn.Conv2d(in_channels=start_filters, out_channels=start_filters, kernel_size=3)
+        self.conv2 = nn.Conv2d(in_channels=start_filters, out_channels=start_filters*2, kernel_size=3)
         self.relu2 = nn.ReLU()
         self.maxpool2 = nn.MaxPool2d(kernel_size=2, stride=2)
 
         # initialize third set of CONV => RELU => POOL layers
-        self.conv3 = nn.Conv2d(in_channels=start_filters, out_channels=start_filters*2, kernel_size=3)
+        self.conv3 = nn.Conv2d(in_channels=start_filters*2, out_channels=start_filters*4, kernel_size=3)
         self.relu3 = nn.ReLU()
         self.maxpool3 = nn.MaxPool2d(kernel_size=2, stride=2)
 
         # initialize fourth set of CONV => RELU => POOL layers
-        self.conv4 = nn.Conv2d(in_channels=start_filters*2, out_channels=start_filters*4, kernel_size=3)
+        self.conv4 = nn.Conv2d(in_channels=start_filters*4, out_channels=start_filters*8, kernel_size=3)
         self.relu4 = nn.ReLU()
         self.maxpool4 = nn.MaxPool2d(kernel_size=2, stride=2)
 
         # initialize first (and only) set of FC => RELU layers
-        self.fc1 = nn.Linear(in_features=64*6*6, out_features=64*6*6)
+        self.fc1 = nn.Linear(in_features=128*6*6, out_features=128*6*6)
         self.relu5 = nn.ReLU()
 
         # initialize our softmax classifier
-        self.fc2 = nn.Linear(in_features=64*6*6, out_features=classes)
+        self.fc2 = nn.Linear(in_features=128*6*6, out_features=classes)
         self.sigmoid = nn.Sigmoid()
 
     def forward(self, x):

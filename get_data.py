@@ -132,7 +132,7 @@ class Cnn2D_Ds(Dataset):
 
         self.df = pd.DataFrame(self.L, columns=['Subject', 'Path MRI', 'Slice', 'Label'])
         self.df = self.df.assign(id=self.df.index.values).sample(frac=1)
-        print(f'dataframe: \n{self.df} \n')
+        print(f'dataframe: \n{self.df["Label"].sum()} \n')
 
 
     def __len__(self):

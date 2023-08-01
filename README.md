@@ -1,1 +1,1 @@
-# CNN for clasifying brain tumors in MRI
+# CNN for brain tumor detection in MRI

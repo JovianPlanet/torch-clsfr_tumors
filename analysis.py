@@ -24,7 +24,7 @@ def assess(config):
     mean_losses = df_loss.groupby("Epoca")["Loss"].mean()
     print(f'Average loss last training epoch = {mean_losses[19]:.3f}\n')
 
-    plt.scatter(range(1, 21), mean_losses, marker='o')
+    plt.plot(range(1, 21), mean_losses, marker='o')
     plt.title('Función de costo: Entropía cruzada binaria\nÉpoca Vs. Costo')
     plt.xticks(np.arange(1, 21, step=1))
     plt.xlabel(f'Epoca')
@@ -48,7 +48,7 @@ def assess(config):
         mean_mets = df_train.groupby("Epoca")[col].mean()
         print(f'Average {tr[col]} (Train) = {mean_mets[19]:.3f}')
 
-        plt.scatter(range(1, 21), mean_mets, marker='o', label=tr[col])
+        plt.plot(range(1, 21), mean_mets, marker='o', label=tr[col])
 
     plt.title(f'Métricas promedio (Entrenamiento)')
     plt.xticks(np.arange(1, 21, step=1))
@@ -69,7 +69,7 @@ def assess(config):
         mean_mets = df_val.groupby("Epoca")[col].mean()
         print(f'Average {tr[col]} (Validación) = {mean_mets[19]:.3f}')
 
-        plt.scatter(range(1, 21), mean_mets, marker='o', label=tr[col])
+        plt.plot(range(1, 21), mean_mets, marker='o', label=tr[col])
 
     plt.title(f'Métricas promedio (Validación)')
     plt.xticks(np.arange(1, 21, step=1))
