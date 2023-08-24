@@ -9,7 +9,7 @@ def get_parameters(mode):
 
     hyperparams = {'model_dims': (128, 128, 64), # Dimensiones de entrada al modelo
                    'new_z'     : [2, 2, 2],      # Nuevo tama;o de zooms
-                   'lr'        : 0.0001,         # Taza de aprendizaje
+                   'lr'        : 0.001,         # Taza de aprendizaje
                    'epochs'    : 20,             # Numero de epocas
                    'batch_size': 4,              # Tama;o del batch
                    'crit'      : 'BCELog',       # Fn de costo. Opciones: 'CELoss', 'BCELog'
@@ -99,8 +99,9 @@ def get_parameters(mode):
 
     elif mode == 'test':
 
-        ex = 'Ex-2023-07-16-01-29-47'
-        mo = 'weights-e14.pth'
+        ex = 'Ex-2023-08-21-14-00-08'
+        mo = 'weights-e20.pth'
+
         PATH_TRAINED_MODEL = os.path.join('./outs', ex, mo)#'./outs/Ex-2023-07-16-01-29-47/weights-e14.pth' 
         PATH_TEST_METS = os.path.join('./outs', ex, 'test_metrics.csv')#'./outs/Ex-2023-07-16-01-29-47/test_metrics.csv'
 
@@ -114,8 +115,8 @@ def get_parameters(mode):
 
     elif mode == 'assess':
 
-        ex = 'Ex-2023-07-16-01-29-47' #'2023-07-11'#
-        mo = 'weights-e14.pth'
+        ex = 'Ex-2023-08-21-14-00-08' #'2023-07-11'#
+        mo = 'weights-e20.pth'
 
         plots_folder = os.path.join('./outs', ex, 'plots'+mo[:-4])
 

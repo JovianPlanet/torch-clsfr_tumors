@@ -120,9 +120,9 @@ class Cnn2D_Ds(Dataset):
             for slice_ in range(self.config['hyperparams']['model_dims'][2]):
 
                 if np.any(l[:, :, slice_]):
-                    self.L.append([subject, mri_path, slice_, 1])
+                    self.L.append([subject, mri_path, slice_, 1.])
                 else:
-                    self.L.append([subject, mri_path, slice_, 0])
+                    self.L.append([subject, mri_path, slice_, 0.])
 
         # for subject in self.norm_subs[:n]:
         #     file_ = 'sub-'+subject+'_ses-NFB3_T1w_brain.nii.gz'

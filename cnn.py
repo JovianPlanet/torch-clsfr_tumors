@@ -70,10 +70,10 @@ class Cnn2D(nn.Module):
 
         # pass the output to our softmax classifier to get our output predictions
         x = self.fc2(x)
-        output = self.sigmoid(x)
+        # output = self.sigmoid(x)
         # return the output predictions
         
-        return output
+        return x
 
 
 class Cnn3D(nn.Module):

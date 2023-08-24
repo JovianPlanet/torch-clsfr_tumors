@@ -45,13 +45,16 @@ def test(config):
             # calculate outputs by running images through the network
             outputs = cnn(images)
 
+            probs_ = nn.Sigmoid()  # Sigmoid para segmentacion binaria
+            pval_  = probs_(outputs)
+
             '''Metricas''' 
             metrics.append([i, 
-                            acc.forward(outputs, labels.unsqueeze(1)).item(),
-                            pre.forward(outputs, labels.unsqueeze(1)).item(),
-                            spe.forward(outputs, labels.unsqueeze(1)).item(),
-                            f1s.forward(outputs, labels.unsqueeze(1)).item(),
-                            rec.forward(outputs, labels.unsqueeze(1)).item()]
+                            acc.forward(pval_, labels.unsqueeze(1)).item(),
+                            pre.forward(pval_, labels.unsqueeze(1)).item(),
+                            spe.forward(pval_, labels.unsqueeze(1)).item(),
+                            f1s.forward(pval_, labels.unsqueeze(1)).item(),
+                            rec.forward(pval_, labels.unsqueeze(1)).item()]
             )
             '''Fin metricas'''
             

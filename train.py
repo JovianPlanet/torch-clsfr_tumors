@@ -55,7 +55,7 @@ def train(config):
     }
 
     optimizer = Adam(cnn.parameters(), lr=config['hyperparams']['lr'])
-    scheduler = lr_scheduler.LinearLR(optimizer, start_factor=1.0, end_factor=0.5, total_iters=4)
+    scheduler = lr_scheduler.LinearLR(optimizer, start_factor=1.0, end_factor=0.1, total_iters=2)
 
     t_acc = BinaryAccuracy().to(device, dtype=torch.double)
     t_pre = BinaryPrecision().to(device, dtype=torch.double)
@@ -107,18 +107,22 @@ def train(config):
             optimizer.step()
             losses.append([epoch, i, loss.item()])
 
+            probs_ = nn.Sigmoid()  # Sigmoid para segmentacion binaria
+            pval_  = probs_(outputs)
+
             '''Metricas''' 
             train_metrics.append([epoch, 
                                   i, 
-                                  t_acc.forward(outputs, labels.unsqueeze(1)).item(),
-                                  t_pre.forward(outputs, labels.unsqueeze(1)).item(),
-                                  t_spe.forward(outputs, labels.unsqueeze(1)).item(),
-                                  t_f1s.forward(outputs, labels.unsqueeze(1)).item(),
-                                  t_rec.forward(outputs, labels.unsqueeze(1)).item()]
+                                  t_acc.forward(pval_, labels.unsqueeze(1)).item(),
+                                  t_pre.forward(pval_, labels.unsqueeze(1)).item(),
+                                  t_spe.forward(pval_, labels.unsqueeze(1)).item(),
+                                  t_f1s.forward(pval_, labels.unsqueeze(1)).item(),
+                                  t_rec.forward(pval_, labels.unsqueeze(1)).item()]
             )
             '''Fin metricas'''
 
             if (i+1) % 300 == 0: 
+                #print(f'{outputs=}\n{pval_=}\n{labels=}')
                 print(f'\nMetricas promedio. Batch No. {i+1}')
                 print(f'Loss          = {running_loss/(i+1):.3f}')
                 print(f'Accuracy      = {t_acc.compute():.3f}')
@@ -129,7 +133,7 @@ def train(config):
 
 
         before_lr = optimizer.param_groups[0]["lr"]
-        if (epoch + 1) % 5 == 0:
+        if (epoch + 1) % 8 == 0:
             scheduler.step()
         after_lr = optimizer.param_groups[0]["lr"]
 
@@ -146,14 +150,17 @@ def train(config):
 
                 outs  = cnn(x)
 
+                probs = nn.Sigmoid()  # Sigmoid para segmentacion binaria
+                pval  = probs(outs)
+
                 '''Metricas''' 
                 val_metrics.append([epoch, 
                                     j, 
-                                    v_acc.forward(outs, y.unsqueeze(1)).item(),
-                                    v_pre.forward(outs, y.unsqueeze(1)).item(),
-                                    v_spe.forward(outs, y.unsqueeze(1)).item(),
-                                    v_f1s.forward(outs, y.unsqueeze(1)).item(),
-                                    v_rec.forward(outs, y.unsqueeze(1)).item()]
+                                    v_acc.forward(pval, y.unsqueeze(1)).item(),
+                                    v_pre.forward(pval, y.unsqueeze(1)).item(),
+                                    v_spe.forward(pval, y.unsqueeze(1)).item(),
+                                    v_f1s.forward(pval, y.unsqueeze(1)).item(),
+                                    v_rec.forward(pval, y.unsqueeze(1)).item()]
                 )
                 '''Fin metricas'''
 
